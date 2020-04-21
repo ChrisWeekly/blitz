@@ -13,61 +13,70 @@ jest.doMock('../src/reporter', () => ({
 jest.doMock('../src/next-utils', () => nextUtilsMock)
 
 // Import with mocks applied
-import {dev} from '../src/dev'
+import {build} from '../src/build'
 import {resolve} from 'path'
 
 import {remove, pathExists} from 'fs-extra'
 import directoryTree from 'directory-tree'
 
-describe('Dev command', () => {
-  const rootFolder = resolve(__dirname, './fixtures/rules')
+describe('Build command ZEIT', () => {
+  const rootFolder = resolve(__dirname, './fixtures/zeit-now')
   const buildFolder = resolve(rootFolder, '.blitz-build')
-  const devFolder = resolve(rootFolder, '.blitz-rules')
+  const devFolder = resolve(rootFolder, '.blitz-dev')
 
   beforeEach(async () => {
+    process.env.NOW_BUILDER = '1'
     jest.clearAllMocks()
-    await dev({rootFolder, buildFolder, devFolder, writeManifestFile: false, watch: false})
+    await build({rootFolder, buildFolder, devFolder, writeManifestFile: false})
   })
 
   afterEach(async () => {
-    if (await pathExists(devFolder)) {
-      await remove(devFolder)
+    delete process.env.NOW_BUILDER
+    if (await pathExists(buildFolder)) {
+      await remove(buildFolder)
     }
   })
 
-  it('should copy the correct files to the dev folder', async () => {
-    const tree = directoryTree(devFolder)
+  it('should copy the correct files to the build folder', async () => {
+    const tree = directoryTree(buildFolder)
     expect(tree).toEqual({
-      path: `${devFolder}`,
-      name: '.blitz-rules',
+      path: `${buildFolder}`,
+      name: '.blitz-build',
       children: [
         {
           extension: '.js',
           name: 'blitz.config.js',
-          path: `${devFolder}/blitz.config.js`,
+          path: `${buildFolder}/blitz.config.js`,
           size: 20,
           type: 'file',
         },
         {
           extension: '.js',
-          name: 'next.config.js',
-          path: `${devFolder}/next.config.js`,
-          size: 138,
+          name: 'next-zeit.config.js',
+          path: `${buildFolder}/next-zeit.config.js`,
+          size: 59,
           type: 'file',
         },
         {
-          path: `${devFolder}/pages`,
+          extension: '.js',
+          name: 'next.config.js',
+          path: `${buildFolder}/next.config.js`,
+          size: 209,
+          type: 'file',
+        },
+        {
+          path: `${buildFolder}/pages`,
           name: 'pages',
           children: [
             {
-              path: `${devFolder}/pages/bar.tsx`,
+              path: `${buildFolder}/pages/bar.tsx`,
               name: 'bar.tsx',
               size: 60,
               extension: '.tsx',
               type: 'file',
             },
             {
-              path: `${devFolder}/pages/foo.tsx`,
+              path: `${buildFolder}/pages/foo.tsx`,
               name: 'foo.tsx',
               size: 60,
               extension: '.tsx',
@@ -78,7 +87,7 @@ describe('Dev command', () => {
           type: 'directory',
         },
       ],
-      size: 278,
+      size: 408,
       type: 'directory',
     })
   })
