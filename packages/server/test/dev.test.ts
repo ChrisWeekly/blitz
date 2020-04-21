@@ -14,13 +14,11 @@ jest.doMock('../src/next-utils', () => nextUtilsMock)
 // Import with mocks applied
 import {dev} from '../src/dev'
 import {resolve} from 'path'
-import {FSWatcher} from 'chokidar'
 import {remove, pathExists} from 'fs-extra'
 import directoryTree from 'directory-tree'
 import * as pkgDir from 'pkg-dir'
 
 describe('Dev command', () => {
-  let watcher: FSWatcher
   let rootFolder: string
   let buildFolder: string
   let devFolder: string
@@ -33,7 +31,6 @@ describe('Dev command', () => {
     if (await pathExists(devFolder)) {
       await remove(devFolder)
     }
-    watcher?.close()
   })
 
   describe('when with next.config', () => {
@@ -44,14 +41,10 @@ describe('Dev command', () => {
     })
 
     it('should fail when passed a next.config.js', (done) => {
-      dev({rootFolder, buildFolder, devFolder, writeManifestFile: false})
-        .then((w) => {
-          watcher = w
-        })
-        .catch((err) => {
-          expect(err.name).toBe('ConfigurationError')
-          done()
-        })
+      dev({rootFolder, buildFolder, devFolder, writeManifestFile: false, watch: false}).catch((err) => {
+        expect(err.name).toBe('ConfigurationError')
+        done()
+      })
     })
   })
 
@@ -60,7 +53,7 @@ describe('Dev command', () => {
       rootFolder = resolve(__dirname, './fixtures/dev')
       buildFolder = resolve(rootFolder, '.blitz')
       devFolder = resolve(rootFolder, '.blitz-dev')
-      watcher = await dev({rootFolder, buildFolder, devFolder, writeManifestFile: false})
+      await dev({rootFolder, buildFolder, devFolder, writeManifestFile: false, watch: false})
     })
 
     it('should copy the correct files to the dev folder', async () => {

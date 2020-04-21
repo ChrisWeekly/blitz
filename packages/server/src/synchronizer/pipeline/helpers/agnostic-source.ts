@@ -1,6 +1,10 @@
+import {through} from '../../streams'
+import vfs from 'vinyl-fs'
+import mergeStream from 'merge-stream'
+// import chokidar from 'chokidar'
+
 import File from 'vinyl'
 import chokidar from 'chokidar'
-import {Readable} from 'readable-stream'
 import vinyl from 'vinyl-file'
 import {Stats} from 'fs'
 import {normalize, resolve} from 'path'
@@ -14,13 +18,11 @@ export const watch = (includePaths: string[] | string, options: chokidar.WatchOp
     return resolve(options.cwd || process.cwd(), filepath)
   }
 
-  const stream = new Readable({
-    objectMode: true,
-    read() {},
-  })
+  const stream = through({objectMode: true}, () => {})
 
   function processEvent(evt: string) {
     return async (filepath: string, _stat: Stats) => {
+      console.log('Processing file...' + filepath)
       filepath = resolveFilepath(filepath)
 
       const fileOpts = Object.assign({}, options, {path: filepath})
@@ -38,4 +40,30 @@ export const watch = (includePaths: string[] | string, options: chokidar.WatchOp
   watcher.on('unlink', processEvent('unlink'))
 
   return {stream, watcher}
+}
+
+type SourceConfig = {cwd: string; include: string[]; ignore: string[]; watch: boolean}
+
+export default function agnosticSource({ignore, include, cwd, watch: watching = false}: SourceConfig) {
+  const noop = through({objectMode: true}, () => {})
+
+  const vinylFsStream = vfs.src([...include, ...ignore.map((a) => '!' + a)], {
+    buffer: true,
+    read: true,
+    cwd,
+  })
+
+  let watchStream = watching
+    ? watch(include, {
+        cwd,
+        ignored: ignore,
+        persistent: true,
+        ignoreInitial: true,
+        alwaysStat: true,
+      }).stream
+    : noop
+
+  const stream = mergeStream(vinylFsStream, watchStream) as NodeJS.ReadWriteStream
+
+  return {stream}
 }
