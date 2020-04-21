@@ -78,7 +78,7 @@ describe('Dev command', () => {
                 extension: '.js',
                 name: 'next.config.js',
                 path: `${devFolder}/next.config.js`,
-                size: 130,
+                size: 138,
                 type: 'file',
               },
               {
@@ -98,7 +98,7 @@ describe('Dev command', () => {
             ],
             name: '.blitz-dev',
             path: `${devFolder}`,
-            size: 150,
+            size: 158,
             type: 'directory',
           },
           {
@@ -125,7 +125,7 @@ describe('Dev command', () => {
         ],
         name: 'dev',
         path: `${rootFolder}`,
-        size: 168,
+        size: 176,
         type: 'directory',
       })
     })

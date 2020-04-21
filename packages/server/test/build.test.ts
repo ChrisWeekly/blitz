@@ -56,7 +56,7 @@ describe('Build command', () => {
               extension: '.js',
               name: 'next.config.js',
               path: `${buildFolder}/next.config.js`,
-              size: 130,
+              size: 138,
               type: 'file',
             },
             {
@@ -76,7 +76,7 @@ describe('Build command', () => {
           ],
           name: '.blitz-build',
           path: `${buildFolder}`,
-          size: 150,
+          size: 158,
           type: 'directory',
         },
         {
@@ -103,7 +103,7 @@ describe('Build command', () => {
       ],
       name: 'build',
       path: `${rootFolder}`,
-      size: 168,
+      size: 176,
       type: 'directory',
     })
   })

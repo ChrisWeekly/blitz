@@ -53,7 +53,7 @@ describe('Dev command', () => {
           extension: '.js',
           name: 'next.config.js',
           path: `${devFolder}/next.config.js`,
-          size: 130,
+          size: 138,
           type: 'file',
         },
         {
@@ -79,7 +79,7 @@ describe('Dev command', () => {
           type: 'directory',
         },
       ],
-      size: 270,
+      size: 278,
       type: 'directory',
     })
   })
