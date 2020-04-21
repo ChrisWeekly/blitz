@@ -85,7 +85,8 @@ describe('Dev command', () => {
   })
 })
 
-describe('Build command ZEIT', () => {
+// XXX
+describe.skip('Build command ZEIT', () => {
   const rootFolder = resolve(__dirname, './fixtures/rules')
   const buildFolder = resolve(rootFolder, '.blitz')
   const devFolder = resolve(rootFolder, '.blitz-rules')

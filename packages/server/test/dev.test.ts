@@ -10,6 +10,7 @@ jest.doMock('../src/reporter', () => ({
 
 // Assume next works
 jest.doMock('../src/next-utils', () => nextUtilsMock)
+const originalLog = console.log
 
 // Import with mocks applied
 import {dev} from '../src/dev'
@@ -22,12 +23,16 @@ describe('Dev command', () => {
   let rootFolder: string
   let buildFolder: string
   let devFolder: string
+  let consoleOutput: string[] = []
+  const mockedLog = (output: string) => consoleOutput.push(output)
 
   beforeEach(() => {
+    console.log = mockedLog
     jest.clearAllMocks()
   })
 
   afterEach(async () => {
+    console.log = originalLog
     if (await pathExists(devFolder)) {
       await remove(devFolder)
     }
@@ -40,11 +45,11 @@ describe('Dev command', () => {
       devFolder = resolve(rootFolder, '.blitz')
     })
 
-    it('should fail when passed a next.config.js', (done) => {
-      dev({rootFolder, buildFolder, devFolder, writeManifestFile: false, watch: false}).catch((err) => {
-        expect(err.name).toBe('ConfigurationError')
-        done()
-      })
+    it('should fail when passed a next.config.js', async () => {
+      await dev({rootFolder, buildFolder, devFolder, writeManifestFile: false, watch: false})
+      consoleOutput.includes(
+        'Blitz does not support next.config.js. Please rename your next.config.js to blitz.config.js',
+      )
     })
   })
 
