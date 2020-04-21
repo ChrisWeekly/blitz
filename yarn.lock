@@ -2517,16 +2517,17 @@
   resolved "https://registry.yarnpkg.com/@types/expect/-/expect-1.20.4.tgz#8288e51737bf7e3ab5d7c77bfa695883745264e5"
   integrity sha512-Q5Vn3yjTDyCMV50TB6VRIbQNxSE4OmZR86VSbGaNpfUolm0iePBB4KdEEHmxoY5sT2+2DIvXW0rvMDP2nHZ4Mg==
 
+"@types/find-parent-dir@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@types/find-parent-dir/-/find-parent-dir-0.3.0.tgz#0a8e9b1eb4fa77e6761d7a078daaed92ad2868f1"
+  integrity sha512-jz1cHlySrflg1Xf6fhy8xe/Bc//eO7wkg7OQePQei4vIYHm9IIQs0Ed8pakV6qVuihTnmy+Le+xUYDardq7yNg==
+
 "@types/from2@^2.3.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@types/from2/-/from2-2.3.0.tgz#5a3dd8d9db0363bc1ee6b98e0538fe0ae356ac3a"
   integrity sha512-WIURl4GQOp6wqa/suhVjtMh9Lgb7nnOsykAPYvwInDLbwu/hCLQcBvF57zQdEterX5sZtKQIHrSFZijvd6FDjA==
   dependencies:
     "@types/node" "*"
-"@types/find-parent-dir@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@types/find-parent-dir/-/find-parent-dir-0.3.0.tgz#0a8e9b1eb4fa77e6761d7a078daaed92ad2868f1"
-  integrity sha512-jz1cHlySrflg1Xf6fhy8xe/Bc//eO7wkg7OQePQei4vIYHm9IIQs0Ed8pakV6qVuihTnmy+Le+xUYDardq7yNg==
 
 "@types/fs-extra@^8.1.0":
   version "8.1.0"
@@ -2691,6 +2692,7 @@
   dependencies:
     "@types/duplexify" "*"
     "@types/node" "*"
+
 "@types/q@^1.5.1":
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
@@ -12956,7 +12958,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@3.8.3, typescript@^3.7.3, typescript@^3.7.5:
+typescript@3.8.3, typescript@^3.7.3, typescript@^3.7.5, typescript@^3.8.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
   integrity sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
