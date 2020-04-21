@@ -16,7 +16,7 @@ const originalLog = console.log
 import {dev} from '../src/dev'
 import {resolve} from 'path'
 import {remove, pathExists} from 'fs-extra'
-import directoryTree from 'directory-tree'
+import {directoryTree} from './utils/tree-utils'
 import * as pkgDir from 'pkg-dir'
 
 describe('Dev command', () => {
@@ -66,67 +66,14 @@ describe('Dev command', () => {
       expect(tree).toEqual({
         children: [
           {
-            children: [
-              {
-                extension: '.js',
-                name: 'blitz.config.js',
-                path: `${devFolder}/blitz.config.js`,
-                size: 20,
-                type: 'file',
-              },
-              {
-                extension: '.js',
-                name: 'next.config.js',
-                path: `${devFolder}/next.config.js`,
-                size: 138,
-                type: 'file',
-              },
-              {
-                extension: '',
-                name: 'one',
-                path: `${devFolder}/one`,
-                size: 0,
-                type: 'file',
-              },
-              {
-                extension: '',
-                name: 'two',
-                path: `${devFolder}/two`,
-                size: 0,
-                type: 'file',
-              },
-            ],
+            children: [{name: 'blitz.config.js'}, {name: 'next.config.js'}, {name: 'one'}, {name: 'two'}],
             name: '.blitz-dev',
-            path: `${devFolder}`,
-            size: 158,
-            type: 'directory',
           },
-          {
-            extension: '',
-            name: '.now',
-            path: `${rootFolder}/.now`,
-            size: 18,
-            type: 'file',
-          },
-          {
-            extension: '',
-            name: 'one',
-            path: `${rootFolder}/one`,
-            size: 0,
-            type: 'file',
-          },
-          {
-            extension: '',
-            name: 'two',
-            path: `${rootFolder}/two`,
-            size: 0,
-            type: 'file',
-          },
+          {name: '.now'},
+          {name: 'one'},
+          {name: 'two'},
         ],
         name: 'dev',
-        path: `${rootFolder}`,
-        size: 176,
-        type: 'directory',
       })
     })
 

@@ -17,7 +17,7 @@ import {dev} from '../src/dev'
 import {resolve} from 'path'
 
 import {remove, pathExists} from 'fs-extra'
-import directoryTree from 'directory-tree'
+import {directoryTree} from './utils/tree-utils'
 
 describe('Dev command', () => {
   const rootFolder = resolve(__dirname, './fixtures/rules')
@@ -38,48 +38,15 @@ describe('Dev command', () => {
   it('should copy the correct files to the dev folder', async () => {
     const tree = directoryTree(devFolder)
     expect(tree).toEqual({
-      path: `${devFolder}`,
       name: '.blitz-rules',
       children: [
+        {name: 'blitz.config.js'},
+        {name: 'next.config.js'},
         {
-          extension: '.js',
-          name: 'blitz.config.js',
-          path: `${devFolder}/blitz.config.js`,
-          size: 20,
-          type: 'file',
-        },
-        {
-          extension: '.js',
-          name: 'next.config.js',
-          path: `${devFolder}/next.config.js`,
-          size: 138,
-          type: 'file',
-        },
-        {
-          path: `${devFolder}/pages`,
           name: 'pages',
-          children: [
-            {
-              path: `${devFolder}/pages/bar.tsx`,
-              name: 'bar.tsx',
-              size: 60,
-              extension: '.tsx',
-              type: 'file',
-            },
-            {
-              path: `${devFolder}/pages/foo.tsx`,
-              name: 'foo.tsx',
-              size: 60,
-              extension: '.tsx',
-              type: 'file',
-            },
-          ],
-          size: 120,
-          type: 'directory',
+          children: [{name: 'bar.tsx'}, {name: 'foo.tsx'}],
         },
       ],
-      size: 278,
-      type: 'directory',
     })
   })
 })

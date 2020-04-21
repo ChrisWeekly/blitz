@@ -17,7 +17,7 @@ import {build} from '../src/build'
 import {resolve} from 'path'
 
 import {remove, pathExists} from 'fs-extra'
-import directoryTree from 'directory-tree'
+import {directoryTree} from './utils/tree-utils'
 
 describe('Build command ZEIT', () => {
   const rootFolder = resolve(__dirname, './fixtures/zeit-now')
@@ -40,55 +40,16 @@ describe('Build command ZEIT', () => {
   it('should copy the correct files to the build folder', async () => {
     const tree = directoryTree(buildFolder)
     expect(tree).toEqual({
-      path: `${buildFolder}`,
       name: '.blitz-build',
       children: [
+        {name: 'blitz.config.js'},
+        {name: 'next-zeit.config.js'},
+        {name: 'next.config.js'},
         {
-          extension: '.js',
-          name: 'blitz.config.js',
-          path: `${buildFolder}/blitz.config.js`,
-          size: 20,
-          type: 'file',
-        },
-        {
-          extension: '.js',
-          name: 'next-zeit.config.js',
-          path: `${buildFolder}/next-zeit.config.js`,
-          size: 59,
-          type: 'file',
-        },
-        {
-          extension: '.js',
-          name: 'next.config.js',
-          path: `${buildFolder}/next.config.js`,
-          size: 209,
-          type: 'file',
-        },
-        {
-          path: `${buildFolder}/pages`,
           name: 'pages',
-          children: [
-            {
-              path: `${buildFolder}/pages/bar.tsx`,
-              name: 'bar.tsx',
-              size: 60,
-              extension: '.tsx',
-              type: 'file',
-            },
-            {
-              path: `${buildFolder}/pages/foo.tsx`,
-              name: 'foo.tsx',
-              size: 60,
-              extension: '.tsx',
-              type: 'file',
-            },
-          ],
-          size: 120,
-          type: 'directory',
+          children: [{name: 'bar.tsx'}, {name: 'foo.tsx'}],
         },
       ],
-      size: 408,
-      type: 'directory',
     })
   })
 })
